@@ -25,5 +25,8 @@
   "homepage": "https://github.com/Fabiano-Lages/Orcamento#readme",
   "dependencies": {
     "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.54.0"
   }
 }
