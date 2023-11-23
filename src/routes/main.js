@@ -1,9 +1,15 @@
-const express = require("express");
+const routerMain = require("express").Router();
 
-const router = express.Router();
-
-router.get("/", (req, res) => {
-    res.send("Oi mundo!");
+routerMain.get("/", (req, res) => {
+    res.render("home"); 
 });
 
-module.exports = { router };
+routerMain.get("/Cliente", (req, res) => {
+    res.redirect("/principal.html");
+});
+
+routerMain.get("/Orcamento", (req, res) => {
+    res.redirect("/principal.html");
+});
+
+module.exports = { routerMain };

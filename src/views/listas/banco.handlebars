@@ -1,0 +1,33 @@
+<div class="card">
+    <div class="card-header">
+        <h5>Novo Banco</h5>
+    </div>
+    <div class="card-body">
+        <form action="/Lista/Banco/add" method="POST">
+            <input type="hidden" name="idBanco" />
+            <label class="form-label" for="txtNomeBanco">Banco</label>
+            <input type="text" name="txtNomeBanco" class="form-control" id="txtNomeBanco" />
+            <p class="text-end">
+                <button type="submit" class="btn btn-success">Salvar</button>
+            </p>
+        </form>
+    </div>
+</div>
+
+<h4 class="mt-5">Lista de Bancos:</h4>
+<hr />
+<div class="container">
+    {{#each bancos}}
+        <div id="{{banco.id}}" class="card">
+            <div class="card-body">
+                <h6>Banco: {{banco.nome}}</h6>
+                <p>
+                    <small>Criado: {{banco.created}}</small>
+                </p>
+                <p>
+                    <small>Modificado: {{banco.modified}}</small>
+                </p>
+            </div>
+        </div>
+    {{/each}}
+</div>
