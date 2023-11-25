@@ -41,18 +41,52 @@ routerLista.get("/Banco", (req, res) => {
 });
 
 routerLista.post("/Banco/add", (req, res) => {
-    console.log("Nome: " + req.body.txtNomeBanco);
-    new Banco(
-        {
-            nome: req.body.txtNomeBanco
-        })
-        .save()
+    if(req.body.idBanco) {
+        Banco.findOne({_id: req.body.idBanco})
+            .then((banco) => {
+                banco.nome = req.body.txtNomeBanco;
+                banco.modified = new Date();
+
+                banco.save()
+                    .then(() => {
+                        req.flash("Log", `Banco ${req.body.txtNomeBanco} editado com sucesso`);
+                        res.redirect("/Lista/Banco");
+                    })
+                    .catch((err) => {
+                        req.flash("Erro", `Erro ao editar o banco ${req.body.txtNomeBanco}. ${err}`);
+                        res.redirect("/Lista/Banco");
+                    });
+            })
+            .catch((err) => {
+                req.flash("Erro", `Erro ao editar o banco ${req.body.txtNomeBanco}. ${err}`);
+                res.redirect("/Lista/Banco");
+            });
+    } else {
+        new Banco(
+            {
+                nome: req.body.txtNomeBanco
+            })
+            .save()
+            .then(() => {
+                req.flash("Log", `Banco ${req.body.txtNomeBanco} incluído com sucesso`);
+                res.redirect("/Lista/Banco");
+            })
+            .catch((err) => {
+                req.flash("Erro", `Erro ao incluir o banco ${req.body.txtNomeBanco}. ${err}`);
+                res.redirect("/Lista/Banco");
+            });
+    }
+});
+
+routerLista.post("/Banco/del", (req, res) => { 
+    Banco.deleteOne({_id: req.body.idBanco})
         .then(() => {
-            console.log("Banco salvo!");
+            req.flash("Log", `Banco ${req.body.txtNomeBanco} removido`);
             res.redirect("/Lista/Banco");
         })
         .catch((err) => {
-            console.log("Erro: " + err); 
+            req.flash("Erro", `Erro ao apagar o banco ${req.body.txtNomeBanco}. ${err}`);
+            res.redirect("/Lista/Banco");
         });
 });
 

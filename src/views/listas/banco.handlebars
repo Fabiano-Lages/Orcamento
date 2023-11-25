@@ -1,26 +1,22 @@
-<div class="card">
-    <div class="card-header">
-        <h5>Novo Banco</h5>
-    </div>
-    <div class="card-body">
-        <form action="/Lista/Banco/add" method="POST">
-            <input type="hidden" name="idBanco" />
-            <label class="form-label" for="txtNomeBanco">Banco</label>
-            <input type="text" name="txtNomeBanco" class="form-control" id="txtNomeBanco" />
-            <p class="text-end">
-                <button type="submit" class="btn btn-success">Salvar</button>
-            </p>
-        </form>
+{{>__modalBanco}}
+<div class="d-flex align-items-center ps-3 pe-2 py-1 border-bottom">
+    <h4 class="">Bancos</h4>
+    <div class="d-flex ms-auto">
+        <button id="btnAdicionar" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalBanco" data-bs-title="Adiciona um novo banco"><i class="bi bi-plus"></i></button>
     </div>
 </div>
 
-<h4 class="mt-5">Lista de Bancos:</h4>
-<hr />
-<div class="container">
+<div id="pnListagem" class="container overflow-y-scroll">
     {{#each bancos}}
-        <div id="{{banco.id}}" class="card">
+        <div id="" class="card mt-4">
             <div class="card-body">
-                <h6>Banco: {{banco.nome}}</h6>
+                <div class="d-flex">
+                    <h6 id="{{banco.id}}">Banco: <span name="banco">{{banco.nome}}</span></h6>
+                    <div class="d-flex ms-auto">
+                        <button type="button" class="btn btn-sm editar" value="{{banco.id}}" aria-label="Edita o banco {{banco.nome}}" data-bs-placement="left" data-bs-title="Edita o banco {{banco.nome}}"><i class="bi bi-pencil-square"></i></button>
+                        <button type="button" class="btn btn-sm excluir" value="{{banco.id}}" aria-label="Exclui o banco {{banco.nome}}" data-bs-placement="bottom" data-bs-title="Excluir o banco {{banco.nome}}"><i class="bi bi-trash3"></i></button>
+                    </div>
+                </div>
                 <p>
                     <small>Criado: {{banco.created}}</small>
                 </p>
@@ -29,5 +25,13 @@
                 </p>
             </div>
         </div>
+    {{else}}
+        <div class="card mt-4">
+            <div class="card-body">
+                <h6>Nenhum banco cadastrado</h6>
+            </div>
+        </div>
     {{/each}}
 </div>
+
+<script type="text/javascript" src="/scripts/banco.js"></script>

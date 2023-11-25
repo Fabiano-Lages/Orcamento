@@ -1,10 +1,25 @@
-const schema = require("mongoose").schema();
+const mongoose = require("mongoose");
+const schema = mongoose.schema();
 
-const EstadoSchema = new schema({
+const Estado = new schema({
     nome: {
         type: String,
-        require: true
+        required: true
+    },
+    sigla: {
+        type: String,
+        required: true
+    },
+    created: {
+        type: Date,
+        required: true,
+        default: Date.now()
+    },
+    modified: {
+        type: Date,
+        required: true,
+        default: Date.now()
     }
 });
 
-module.exports = { EstadoSchema };
+mongoose.model("estados", Estado);

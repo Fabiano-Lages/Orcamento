@@ -1,0 +1,21 @@
+<div class="modal fade" id="modalBanco" tabindex="-1" data-bs-backdrop="static" aria-labelledby="Formulário de edição do banco" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form id="frmBanco" action="/Lista/Banco/add" method="POST" class="needs-validation">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Novo</h1>
+                    <button type="reset" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="idBanco" id="idBanco" />
+                    <label class="form-label" for="txtNomeBanco">Banco</label>
+                    <input type="text" name="txtNomeBanco" class="form-control" id="txtNomeBanco" required />
+                </div>
+                <div class="modal-footer">
+                    <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Fechar">Fechar</button>
+                    <button type="submit" class="btn btn-primary" aria-label="Salvar">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

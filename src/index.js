@@ -4,11 +4,27 @@ const bodyParser = require("body-parser");
 const config = require("./config/config");
 const routes = require("./routes/main");
 const routesLista = require("./routes/lista");
+const session = require("express-session");
+const flash = require("connect-flash");
 
 const app = express(); 
+
+app.use(session({
+    secret: "ControleOrcamento",
+    resave: true,
+    saveUninitialized: true
+}));
+app.use(flash());
+
+app.use((req, res, next) => {
+    res.locals.Log = req.flash("Log");
+    res.locals.Erro = req.flash("Erro");
+    next();
+});
+
 app.engine("handlebars", handlebars.engine({defaultLayout: "principal"}));
 app.set("view engine", "handlebars");
-app.set("views", "C:/Repositório/js/node/app/Orcamento/src/views");
+app.set("views", `${config._DirName}/views`);
 
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());

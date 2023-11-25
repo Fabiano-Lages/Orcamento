@@ -1,6 +1,5 @@
-const { default: mongoose } = require("mongoose");
-
-const schema = require("mongoose").schema();
+const mongoose = require("mongoose");
+const schema = mongoose.schema();
 
 const Bairro = new schema({
     nome: {
@@ -8,7 +7,8 @@ const Bairro = new schema({
         require: true
     },
     cidade: {
-        type: String,
+        type: mongoose.Types.ObjectId,
+        ref: "cidades",
         require: true
     }
 });

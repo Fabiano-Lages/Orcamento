@@ -1,3 +1,27 @@
 .escondido {
     display: none;
 }
+
+#pnListagem {
+    height: 70vh;
+}
+
+#pnListagem div.card-body p {
+    margin-bottom: 0.3rem;
+}
+
+#pnListagem button.btn-sm {
+    opacity: 0.6;
+}
+
+#pnListagem button.btn-sm:hover {
+    opacity: 1;
+}
+
+#pnListagem button.btn-sm:hover i::before {
+    font-weight: bold !important;
+}
+
+#pnListagem button.excluir {
+    color: red;
+}

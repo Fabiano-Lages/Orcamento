@@ -1,14 +1,29 @@
-const schema = require("mongoose").schema();
+const mongoose = require("mongoose");
+const schema = mongoose.schema();
 
-const CidadeSchema = new schema({
+const Cidade = new schema({
     nome: {
         type: String,
         require: true
     },
-    Estado: {
-        type: String,
+    estado: {
+        type: mongoose.Types.ObjectId,
+        ref: "estados",
         require: true
+    },
+    codigoArea: {
+        type: String
+    },
+    created: {
+        type: Date,
+        required: true,
+        default: Date.now()
+    },
+    modified: {
+        type: Date,
+        required: true,
+        default: Date.now()
     }
 });
 
-module.exports = { CidadeSchema };
+mongoose.model("cidades", Cidade);
