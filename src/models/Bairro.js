@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
-const schema = mongoose.schema();
+const Schema = mongoose.Schema;
 
-const Bairro = new schema({
+const Bairro = new Schema({
     nome: {
         type: String,
         require: true
@@ -13,4 +13,4 @@ const Bairro = new schema({
     }
 });
 
-mongoose.model("Bairro", Bairro );
+mongoose.model("bairros", Bairro);

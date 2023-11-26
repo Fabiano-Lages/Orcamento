@@ -1,0 +1,25 @@
+<div class="modal fade" id="modalForm" tabindex="-1" data-bs-backdrop="static" aria-labelledby="Formulário de edição da cidade" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form id="frmEdicao" tag="Cidade" action="/Lista/Cidade/add" method="POST" class="needs-validation">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="tituloModalForm">Novo</h1>
+                    <button type="reset" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="idCidade" id="idCidade" />
+                    <input type="hidden" name="hdEstado" id="hdEstado" />
+                    <label class="form-label" for="txtNomeCidade">Cidade</label>
+                    <input type="text" name="txtNomeCidade" class="form-control" id="txtNomeCidade" required />
+
+                    <label class="form-label" for="txtCodigoArea">Código de área</label>
+                    <input type="text" name="txtCodigoArea" class="form-control" id="txtCodigoArea" maxlength="3" oninvalid="this.setCustomValidity('O código de área deve possuir 3 dígitos')" required />
+                </div>
+                <div class="modal-footer">
+                    <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Fechar">Fechar</button>
+                    <button type="submit" class="btn btn-primary" aria-label="Salvar">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

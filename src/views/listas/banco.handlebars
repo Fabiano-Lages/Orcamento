@@ -2,7 +2,7 @@
 <div class="d-flex align-items-center ps-3 pe-2 py-1 border-bottom">
     <h4 class="">Bancos</h4>
     <div class="d-flex ms-auto">
-        <button id="btnAdicionar" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalBanco" data-bs-title="Adiciona um novo banco"><i class="bi bi-plus"></i></button>
+        <button id="btnAdicionar" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalForm" data-bs-title="Adiciona um novo banco"><i class="bi bi-plus"></i></button>
     </div>
 </div>
 
@@ -17,12 +17,10 @@
                         <button type="button" class="btn btn-sm excluir" value="{{banco.id}}" aria-label="Exclui o banco {{banco.nome}}" data-bs-placement="bottom" data-bs-title="Excluir o banco {{banco.nome}}"><i class="bi bi-trash3"></i></button>
                     </div>
                 </div>
-                <p>
-                    <small>Criado: {{banco.created}}</small>
-                </p>
-                <p>
-                    <small>Modificado: {{banco.modified}}</small>
-                </p>
+            </div>
+            <div class="card-footer d-flex justify-content-around fts-italic">
+                <small>Criado em {{banco.created}}</small>
+                <small>Modificado em {{banco.modified}}</small>
             </div>
         </div>
     {{else}}

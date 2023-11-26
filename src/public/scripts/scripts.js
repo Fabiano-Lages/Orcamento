@@ -1,9 +1,104 @@
 window.addEventListener("load", () => {
     const tool = document.querySelectorAll("[data-bs-title]");
-    // eslint-disable-next-line no-undef
-    tool.forEach(it => bootstrap.Tooltip.getOrCreateInstance(it));
+    tool.forEach(it => Bootstrap.Tooltip.getOrCreateInstance(it));
 
+    const frm = document.getElementById("frmEdicao");
+
+    if(frm) {
+        modalForm = document.getElementById("modalForm");
+        modalForm.addEventListener("hidden.bs.modal", () => {
+            document.getElementById("tituloModalForm").innerHTML = "Novo";
+            frm.reset();
+        });
+        modalForm.addEventListener("shown.bs.modal", () => {
+            document.getElementById(`txtNome${frm.getAttribute("tag")}`).focus();
+        });
+        
+        modalForm = new Bootstrap.Modal(modalForm);
+
+        frm.addEventListener("submit", (ev) => {
+            ev.preventDefault();
+            let duplo = verificaDuplicidade();
+            let valido = validaForm();
+
+            if(duplo && valido) {
+                frm.submit();
+            } else {
+                if(!duplo) {
+                    appendAlert(`Este ${frm.getAttribute("tag").toLowerCase()} já existe`, "danger");
+                } else if (!valido) {
+                    appendAlert("Preencha os campos corretamente", "danger");
+                }
+            }
+        });
+        
+        document.querySelectorAll("button.editar")
+            .forEach(btn => { 
+                btn.addEventListener("click", (ev) => {
+                    let obj = ev.target;
+                    if(obj.tagName == "I") {
+                        obj = obj.parentNode;
+                    }
+
+                    let id = obj.value;
+                    preencheFormulario(id);
+                    modalForm.show();
+                });
+            });
+
+        document.querySelectorAll("button.excluir")
+            .forEach(btn => { 
+                btn.addEventListener("click", (ev) => {
+                    let obj = ev.target;
+                    if(obj.tagName == "I") {
+                        obj = obj.parentNode;
+                    }
+
+                    let id = obj.value;
+                    preencheFormulario(id);
+
+                    frm.action = `/Lista/${frm.getAttribute("tag")}/del`;
+                    frm.submit();
+                });
+            });
+    }
 });
+
+let modalForm = null;
+// eslint-disable-next-line no-undef
+const Bootstrap = bootstrap;
+
+const preencheFormulario = (id) => {
+    // eslint-disable-next-line no-constant-condition
+    if(typeof("_preencheForm") != "undefined") {
+        // eslint-disable-next-line no-undef
+        _preencheForm(id);
+    }
+};
+
+const verificaDuplicidade = () => {
+    let retorno = false;
+
+    // eslint-disable-next-line no-constant-condition
+    if(typeof("_verificaDup") != "undefined") {
+        // eslint-disable-next-line no-undef
+        retorno = _verificaDup();
+    }
+
+    return(retorno);
+};
+
+const validaForm = () => {
+    let retorno = true;
+    
+    // eslint-disable-next-line no-constant-condition
+    if(typeof("_validaForm") != "undefined") {
+        // eslint-disable-next-line no-undef
+        retorno = _validaForm();
+    }
+
+    return(retorno);
+};
 
 // eslint-disable-next-line no-unused-vars
 const appendAlert = (message, type) => {

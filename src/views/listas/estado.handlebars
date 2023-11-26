@@ -1,0 +1,38 @@
+{{>__modalEstado}}
+<div class="d-flex align-items-center ps-3 pe-2 py-1 border-bottom">
+    <h4 class="">Estados</h4>
+    <div class="d-flex ms-auto">
+        <button id="btnAdicionar" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalForm" data-bs-title="Adiciona um novo estado"><i class="bi bi-plus"></i></button>
+    </div>
+</div>
+
+<div id="pnListagem" class="container overflow-y-scroll">
+    {{#each estados}}
+        <div id="estado-{{estado.id}}" class="card mt-4">
+            <div class="card-body">
+                <div class="d-flex">
+                    <h6 id="{{estado.id}}">Nome: <span class="fw-normal" name="estado">{{estado.nome}}</span></h6>
+                    <div class="d-flex ms-auto">
+                        <button type="button" class="btn btn-sm editar" value="{{estado.id}}" aria-label="Edita o estado {{estado.nome}}" data-bs-placement="left" data-bs-title="Edita o estado {{estado.nome}}"><i class="bi bi-pencil-square"></i></button>
+                        <button type="button" class="btn btn-sm excluir" value="{{estado.id}}" aria-label="Exclui o estado {{estado.nome}}" data-bs-placement="bottom" data-bs-title="Excluir o estado {{estado.nome}}"><i class="bi bi-trash3"></i></button>
+                    </div>
+                </div>
+                <p>
+                    <small class="fw-bold">Sigla: <span class="fw-normal" name="sigla">{{estado.sigla}}</span></small>
+                </p>
+            </div>
+            <div class="card-footer d-flex justify-content-around fts-italic">
+                <small>Criado em {{estado.created}}</small>
+                <small>Modificado em {{estado.modified}}</small>
+            </div>
+        </div>
+    {{else}}
+        <div class="card mt-4">
+            <div class="card-body">
+                <h6>Nenhum estado cadastrado</h6>
+            </div>
+        </div>
+    {{/each}}
+</div>
+
+<script type="text/javascript" src="/scripts/estado.js"></script>
