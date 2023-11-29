@@ -4,6 +4,13 @@ window.addEventListener("load", () => {
 
     const frm = document.getElementById("frmEdicao");
 
+    document.querySelectorAll("div.alert button")
+        .forEach(btn => {
+            setTimeout(() => {
+                btn.click();
+            }, 10000);
+        });
+
     if(frm) {
         modalForm = document.getElementById("modalForm");
         modalForm.addEventListener("hidden.bs.modal", () => {
@@ -32,35 +39,7 @@ window.addEventListener("load", () => {
             }
         });
         
-        document.querySelectorAll("button.editar")
-            .forEach(btn => { 
-                btn.addEventListener("click", (ev) => {
-                    let obj = ev.target;
-                    if(obj.tagName == "I") {
-                        obj = obj.parentNode;
-                    }
-
-                    let id = obj.value;
-                    preencheFormulario(id);
-                    modalForm.show();
-                });
-            });
-
-        document.querySelectorAll("button.excluir")
-            .forEach(btn => { 
-                btn.addEventListener("click", (ev) => {
-                    let obj = ev.target;
-                    if(obj.tagName == "I") {
-                        obj = obj.parentNode;
-                    }
-
-                    let id = obj.value;
-                    preencheFormulario(id);
-
-                    frm.action = `/Lista/${frm.getAttribute("tag")}/del`;
-                    frm.submit();
-                });
-            });
+        ativaBotoes(frm);
     }
 });
 
@@ -70,7 +49,7 @@ const Bootstrap = bootstrap;
 
 const preencheFormulario = (id) => {
     // eslint-disable-next-line no-constant-condition
-    if(typeof("_preencheForm") != "undefined") {
+    if(typeof(_preencheForm) != "undefined") {
         // eslint-disable-next-line no-undef
         _preencheForm(id);
     }
@@ -80,7 +59,7 @@ const verificaDuplicidade = () => {
     let retorno = false;
 
     // eslint-disable-next-line no-constant-condition
-    if(typeof("_verificaDup") != "undefined") {
+    if(typeof(_verificaDup) != "undefined") {
         // eslint-disable-next-line no-undef
         retorno = _verificaDup();
     }
@@ -92,7 +71,7 @@ const validaForm = () => {
     let retorno = true;
     
     // eslint-disable-next-line no-constant-condition
-    if(typeof("_validaForm") != "undefined") {
+    if(typeof(_validaForm) != "undefined") {
         // eslint-disable-next-line no-undef
         retorno = _validaForm();
     }
@@ -116,4 +95,36 @@ const appendAlert = (message, type) => {
     setTimeout(() => {
         document.getElementById(id).click();
     }, 10000);
+};
+
+const ativaBotoes = (frm) =>{
+    document.querySelectorAll("button.editar")
+        .forEach(btn => { 
+            btn.addEventListener("click", (ev) => {
+                let obj = ev.target;
+                if(obj.tagName == "I") {
+                    obj = obj.parentNode;
+                }
+
+                let id = obj.value;
+                preencheFormulario(id);
+                modalForm.show();
+            });
+        });
+
+    document.querySelectorAll("button.excluir")
+        .forEach(btn => { 
+            btn.addEventListener("click", (ev) => {
+                let obj = ev.target;
+                if(obj.tagName == "I") {
+                    obj = obj.parentNode;
+                }
+
+                let id = obj.value;
+                preencheFormulario(id);
+
+                frm.action = `/Lista/${frm.getAttribute("tag")}/del`;
+                frm.submit();
+            });
+        });
 };

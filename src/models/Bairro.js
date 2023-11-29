@@ -10,6 +10,16 @@ const Bairro = new Schema({
         type: mongoose.Types.ObjectId,
         ref: "cidades",
         require: true
+    },
+    created: {
+        type: Date,
+        required: true,
+        default: Date.now()
+    },
+    modified: {
+        type: Date,
+        required: true,
+        default: Date.now()
     }
 });
 

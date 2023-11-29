@@ -9,11 +9,26 @@
     <label class="form-labelclass fw-bold" for="dropEstado">Estado</label>
     <select name="dropEstado" class="form-select" id="dropEstado" selecionado="{{estadoSelecionado}}">
         {{#each estados}}
-            <option value="{{id}}">{{nome}}</option>
+            {{#if estado.selecionado}}
+                <option value="{{estado.id}}" selected="true">{{estado.nome}}</option>
+            {{else}}
+                <option value="{{estado.id}}">{{estado.nome}}</option>
+            {{/if}}
         {{/each}}
     </select>
     <label class="form-labelclass fw-bold" for="dropCidade">Cidade</label>
-    <select name="dropCidade" class="form-select" id="dropCidade" selecionado="{{cidadeSelecionada}}"></select>
+    <select name="dropCidade" class="form-select" id="dropCidade" selecionado="{{cidadeSelecionada}}">
+        {{#each cidades}}
+            <option value="">Selecione uma cidade</option>
+            {{#if cidade.selecionado}}
+                <option value="{{cidade.id}}" selected="true">{{cidade.nome}}</option>
+            {{else}}
+                <option value="{{cidade.id}}">{{cidade.nome}}</option>
+            {{/if}}
+        {{else}}
+            <option value="">Nenhuma cidade encontrada para este estado</option>
+        {{/each}}
+    </select>
 </div>
 <div id="pnListagem" class="container overflow-y-scroll">
     {{#each bairros}}
@@ -22,8 +37,8 @@
                 <div class="d-flex">
                     <h6 id="{{bairro.id}}">Nome: <span class="fw-normal" name="bairro">{{bairro.nome}}</span></h6>
                     <div class="d-flex ms-auto">
-                        <button type="button" class="btn btn-sm editar" value="{{bairro.id}}" aria-label="Edita o bairro {{bairro.nome}}" data-bs-placement="left" data-bs-title="Edita o cidade {{bairro.nome}}"><i class="bi bi-pencil-square"></i></button>
-                        <button type="button" class="btn btn-sm excluir" value="{{bairro.id}}" aria-label="Exclui o bairro {{bairro.nome}}" data-bs-placement="bottom" data-bs-title="Excluir o cidade {{bairro.nome}}"><i class="bi bi-trash3"></i></button>
+                        <button type="button" class="btn btn-sm editar" value="{{bairro.id}}" aria-label="Edita o bairro {{bairro.nome}}" data-bs-placement="left" data-bs-title="Edita o bairro {{bairro.nome}}"><i class="bi bi-pencil-square"></i></button>
+                        <button type="button" class="btn btn-sm excluir" value="{{bairro.id}}" aria-label="Exclui o bairro {{bairro.nome}}" data-bs-placement="bottom" data-bs-title="Excluir o bairro {{bairro.nome}}"><i class="bi bi-trash3"></i></button>
                     </div>
                 </div>
             </div>
@@ -35,7 +50,11 @@
     {{else}}
         <div class="card mt-4">
             <div class="card-body">
-                <h6>Nenhum bairro encontrado</h6>
+                {{#if cidadeSelecionada}}
+                    <h6 class="opacity-75">Nenhum bairro encontrado</h6>
+                {{else}}
+                    <h6 class="opacity-75">Selecione uma cidade</h6>
+                {{/if}}
             </div>
         </div>
     {{/each}}

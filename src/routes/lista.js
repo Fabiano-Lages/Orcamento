@@ -13,51 +13,82 @@ const Cidade = mongoose.model("cidades");
 const Bairro = mongoose.model("bairros");
 
 routerLista.get("/Bairro", (req, res) => {
-    buscaBairro(req, res);
-});
-
-routerLista.get("/Bairro/:cidade", (req, res) => {
-    buscaBairro(req, res, req.params.cidade);
-});
-
-const buscaBairro = async (req, res, cidade) => {
-    let filtro = {cidade};
-    let selecionado = cidade;
-
-    const listaEstado = [];
-    const listaCidade = [];
-    (await Estado.find().sort({nome: "asc"}))
-        .forEach(est => listaEstado.push({id: est._id, nome: est.nome}));
-
-    if(!cidade && listaCidade.length) {
-        filtro = {estado: listaCidade[0].id};
-        selecionado = listaCidade[0].id;
-    }
-
-    Bairro.find(filtro).sort({nome: "asc"})
-        .then((bairros) => {
-            const lista = [];
-            bairros.forEach(brr => {
-                lista.push({
-                    bairro: {
-                        id: brr._id,
-                        nome: brr.nome,
-                        cidade: brr.cidade,
-                        created: `${brr.created.toLocaleDateString("pt-BR")} ${brr.created.toLocaleTimeString("pt-BR")}`,
-                        modified: `${brr.modified.toLocaleDateString("pt-BR")} ${brr.modified.toLocaleTimeString("pt-BR")}`
-                    }
+    buscaEstados(req)
+        .then((listaEstado) => {
+            let estadoSelecionado = listaEstado[0].estado.id;
+            listaEstado.find(it => it.estado.id == estadoSelecionado).selecionado = true;
+            buscaCidade(req, estadoSelecionado)
+                .then((listaCidade) => {
+                    res.render("listas/bairro", {bairros: [], estados: listaEstado, cidades: listaCidade, cidadeSelecionada: "", estadoSelecionado});
+                })
+                .catch(() => {
+                    res.redirect("/");
                 });
-            });
-            res.render("listas/bairro", {bairros: lista, cidades: listaCidade, selecionado});
         })
-        .catch((err) => {
-            req.flash("error_msg", "Erro ao listar bairros " + err);
+        .catch(() => {
             res.redirect("/");
         });
+});
+
+routerLista.get("/Bairro/Listagem/:estado/:cidade", (req, res) => {
+    buscaEstados(req)
+        .then((listaEstado) => {
+            let estadoSelecionado = req.params.estado;
+            listaEstado.find(it => it.estado.id == estadoSelecionado).estado.selecionado = true;
+            buscaCidade(req, estadoSelecionado)
+                .then((listaCidade) => {
+                    let cidadeSelecionada = req.params.cidade;
+                    listaCidade.find(it => it.cidade.id == cidadeSelecionada).cidade.selecionado = true;
+                    buscaBairro(cidadeSelecionada)
+                        .then((lista) => {
+                            res.render("listas/bairro", {bairros: lista, estados: listaEstado, cidades: listaCidade, cidadeSelecionada, estadoSelecionado});
+                        })
+                        .catch(() => {
+                            res.redirect("/");
+                        });
+                })
+                .catch(() => {
+                    res.redirect("/");
+                });
+        })
+        .catch(() => {
+            res.redirect("/");
+        });
+});
+
+routerLista.get("/Bairro/Busca/:cidade", (req, res) => {
+    buscaBairro(req.params.cidade)
+        .then((lista) => {
+            res.end(JSON.stringify(lista));
+        })
+        .catch((err) => {
+            console.log(err);
+            res.end(JSON.stringify({Erro: err}));
+        });
+});
+
+const buscaBairro = async (cidade) => {
+    const bairros = [];
+    const rst = await Bairro.find({cidade}).sort({nome: "asc"});
+    if(rst) {
+        rst.forEach(brr => {
+            bairros.push({
+                bairro: {
+                    id: brr._id,
+                    nome: brr.nome,
+                    cidade: brr.cidade,
+                    created: `${brr.created.toLocaleDateString("pt-BR")} ${brr.created.toLocaleTimeString("pt-BR")}`,
+                    modified: `${brr.modified.toLocaleDateString("pt-BR")} ${brr.modified.toLocaleTimeString("pt-BR")}`
+                }
+            });
+        });
+    }
+
+    return(bairros);
 };
 
 routerLista.post("/Bairro/add", (req, res) => {
-    const destino = `/Lista/Bairro/${req.body.hdCidade}`;
+    const destino = `/Lista/Bairro/Listagem/${req.body.hdEstado}/${req.body.hdCidade}`;
     const nomeObjeto = "Bairro";
 
     if(req.body.idBairro) {
@@ -112,30 +143,80 @@ routerLista.post("/Bairro/del", async (req, res) => {
 });
 
 routerLista.get("/Cidade", (req, res) => {
-    buscaCidade(req, res);
+    buscaEstados(req)
+        .then((listaEstado) => {
+            let selecionado = listaEstado[0].estado.id;
+            buscaCidade(req, selecionado)
+                .then((lista) => {
+                    res.render("listas/cidade", {cidades: lista, estados: listaEstado, selecionado});
+                })
+                .catch(() => {
+                    res.redirect("/");
+                });
+        })
+        .catch(() => {
+            res.redirect("/");
+        });
 });
 
 routerLista.get("/Cidade/:estado", (req, res) => {
-    buscaCidade(req, res, req.params.estado);
+    buscaEstados(req)
+        .then((listaEstado) => {
+            buscaCidade(req, req.params.estado)
+                .then((lista) => {
+                    res.render("listas/cidade", {cidades: lista, estados: listaEstado, selecionado: req.params.estado});
+                })
+                .catch(() => {
+                    res.redirect("/");
+                });
+        })
+        .catch(() => {
+            res.redirect("/");
+        });
 });
 
-const buscaCidade = async (req, res, estado) => {
-    let filtro = {estado};
-    let selecionado = estado;
+routerLista.get("/Cidade/Busca/:estado", (req, res) => {
+    buscaCidade(req, req.params.estado)
+        .then((lista) => {
+            res.end(JSON.stringify(lista));
+        })
+        .catch((err) => {
+            console.log(err);
+            res.end(JSON.stringify({Erro: err}));
+        });
+});
 
-    const listaEstado = [];
-    (await Estado.find().sort({nome: "asc"}))
-        .forEach(est => listaEstado.push({id: est._id, nome: est.nome}));
+const buscaEstados = async (req) => {
+    const lista = [];
+    try {
+        const rst = await Estado.find().sort({nome: "asc"});
 
-    if(!estado && listaEstado.length) {
-        filtro = {estado: listaEstado[0].id};
-        selecionado = listaEstado[0].id;
+        if(rst) {
+            rst.forEach(est => lista.push(
+                {
+                    estado: {
+                        id: est._id, 
+                        nome: est.nome,
+                        sigla: est.sigla,
+                        created: `${est.created.toLocaleDateString("pt-BR")} ${est.created.toLocaleTimeString("pt-BR")}`,
+                        modified: `${est.modified.toLocaleDateString("pt-BR")} ${est.modified.toLocaleTimeString("pt-BR")}`
+                    }
+                }
+            ));
+        }
+    } catch(err) {
+        req.flash("error_msg", "Erro ao listar estados " + err);
     }
 
-    Cidade.find(filtro).sort({nome: "asc"})
-        .then((cidades) => {
-            const lista = [];
-            cidades.forEach(cid => {
+    return(lista);
+};
+
+const buscaCidade = async (req, estado) => {
+    const lista = [];
+    try {
+        const rst = await Cidade.find({estado}).sort({nome: "asc"});
+        if(rst) {
+            rst.forEach(cid => {
                 lista.push({
                     cidade: {
                         id: cid._id,
@@ -147,12 +228,12 @@ const buscaCidade = async (req, res, estado) => {
                     }
                 });
             });
-            res.render("listas/cidade", {cidades: lista, estados: listaEstado, selecionado});
-        })
-        .catch((err) => {
-            req.flash("error_msg", "Erro ao listar cidades " + err);
-            res.redirect("/");
-        });
+        }
+    } catch(err) {
+        req.flash("error_msg", "Erro ao listar cidades " + err);
+    }
+
+    return(lista);
 };
 
 routerLista.post("/Cidade/add", (req, res) => {
@@ -219,24 +300,11 @@ routerLista.post("/Cidade/del", async (req, res) => {
 });
 
 routerLista.get("/Estado", (req, res) => {
-    Estado.find().sort({nome: "asc"})
+    buscaEstados(req)
         .then((estados) => {
-            const lista = [];
-            estados.forEach(est => {
-                lista.push({
-                    estado: {
-                        id: est._id,
-                        nome: est.nome,
-                        sigla: est.sigla,
-                        created: `${est.created.toLocaleDateString("pt-BR")} ${est.created.toLocaleTimeString("pt-BR")}`,
-                        modified: `${est.modified.toLocaleDateString("pt-BR")} ${est.modified.toLocaleTimeString("pt-BR")}`
-                    }
-                });
-            });
-            res.render("listas/estado", {estados: lista});
+            res.render("listas/estado", {estados});
         })
-        .catch((err) => {
-            req.flash("error_msg", "Erro ao listar estados " + err);
+        .catch(() => {
             res.redirect("/");
         });
 });

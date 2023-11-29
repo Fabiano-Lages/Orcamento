@@ -4,6 +4,8 @@ const bodyParser = require("body-parser");
 const config = require("./config/config");
 const routes = require("./routes/main");
 const routesLista = require("./routes/lista");
+const routesOrca = require("./routes/orcamento");
+const routesCliente = require("./routes/cliente");
 const session = require("express-session");
 const flash = require("connect-flash");
 
@@ -33,6 +35,8 @@ app.use(express.static(config._DirName + "/public"));
 
 app.use(routes.routerMain);
 app.use("/Lista", routesLista.routerLista);
+app.use("/Cliente", routesCliente.routerCliente);
+app.use("/Orcamento", routesOrca.routerOrca);
 
 app.listen(config._Porta, () => {
     console.log(`Aplicativo Orçamento escutando na porta ${config._Porta}`);
