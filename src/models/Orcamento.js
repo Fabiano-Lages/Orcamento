@@ -1,18 +1,19 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const Cidade = new Schema({
-    nome: {
+const Orcamento = new Schema({
+    cliente: {
+        type: mongoose.Types.ObjectId,
+        ref: "clientes",
+        required: true
+    },
+    descricao: {
         type: String,
         required: true
     },
-    estado: {
-        type: mongoose.Types.ObjectId,
-        ref: "estados",
+    valor: {
+        type: Number,
         required: true
-    },
-    codigoArea: {
-        type: String
     },
     created: {
         type: Date,
@@ -26,4 +27,4 @@ const Cidade = new Schema({
     }
 });
 
-mongoose.model("cidades", Cidade);
+mongoose.model("orcamentos", Orcamento);
