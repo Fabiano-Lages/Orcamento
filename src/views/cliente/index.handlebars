@@ -1,1 +1,49 @@
-<h3>Cliente em construção</h3>
+{{>__modalCliente}}
+<div class="d-flex align-items-center ps-3 pe-2 py-1 border-bottom">
+    <h4 class="">Clientes</h4>
+    <div class="d-flex ms-auto">
+        <button id="btnAdicionar" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalForm" data-bs-title="Adiciona um cliente novo"><i class="bi bi-plus"></i></button>
+    </div>
+</div>
+<div id="pnListagem" class="container overflow-y-scroll">
+    {{#each clientes}}
+        <div id="cliente-{{cliente.id}}" class="card mt-4">
+            <div class="card-body">
+                <div class="d-flex">
+                    <h6 id="{{cliente.id}}">Nome: <span class="fw-normal" name="cliente">{{cliente.nome}}</span></h6>
+                    <div class="d-flex ms-auto">
+                        <button type="button" class="btn btn-sm editar" value="{{cliente.id}}" aria-label="Edita o cliente {{cliente.nome}}" data-bs-placement="left" data-bs-title="Edita o cliente {{cliente.nome}}"><i class="bi bi-pencil-square"></i></button>
+                        <button type="button" class="btn btn-sm excluir" value="{{cliente.id}}" aria-label="Exclui o cliente {{cliente.nome}}" data-bs-placement="bottom" data-bs-title="Excluir o cliente {{cliente.nome}}"><i class="bi bi-trash3"></i></button>
+                    </div>
+                </div>
+                <p>
+                    <small class="fw-bold">Endereço: <span class="fw-normal" name="endereco">{{cliente.endereco}}</span></small>
+                </p>
+                <p>
+                    <small class="fw-bold">Bairro: <span class="fw-normal" name="bairro">{{cliente.bairro}}</span></small>
+                </p>
+                <p>
+                    <small class="fw-bold">Cidade: <span class="fw-normal" name="cidade">{{cliente.cidade}}</span></small>
+                </p>
+                <p>
+                    <small class="fw-bold">Estado: <span class="fw-normal" name="estado">{{cliente.estado}}</span></small>
+                </p>
+                <p>
+                    <small class="fw-bold">CEP: <span class="fw-normal" name="cep">{{cliente.cep}}</span></small>
+                </p>
+            </div>
+            <div class="card-footer d-flex justify-content-around fts-italic">
+                <small>Criado em {{cliente.created}}</small>
+                <small>Modificado em {{cliente.modified}}</small>
+            </div>
+        </div>
+    {{else}}
+        <div class="card mt-4">
+            <div class="card-body">
+                <h6 class="opacity-75">Nenhum cliente cadastrado</h6>
+            </div>
+        </div>
+    {{/each}}
+</div>
+
+<script type="text/javascript" src="/scripts/cliente.js"></script>

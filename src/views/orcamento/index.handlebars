@@ -1,1 +1,51 @@
-<h3>Orçamento em construção</h3>
+{{>__modalOrcamento}}
+<div class="d-flex align-items-center ps-3 pe-2 py-1 border-bottom">
+    <h4 class="">Orçamentos</h4>
+    <div class="d-flex ms-auto">
+        <button id="btnAdicionar" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalForm" data-bs-title="Adiciona um orçamento novo"><i class="bi bi-plus"></i></button>
+    </div>
+</div>
+<div class="container">
+    <label class="form-labelclass fw-bold" for="dropCliente">Cliente</label>
+    <select name="dropCliente" class="form-select" id="dropCliente" selecionado="{{selecionado}}">
+        {{#each clientes}}
+            <option value="{{cliente.id}}">{{cliente.nome}}</option>
+        {{else}}
+            <option value="">Nenhum cliente cadastrado</option>
+        {{/each}}
+    </select>
+</div>
+
+<div id="pnListagem" class="container overflow-y-scroll">
+    {{#each orcamentos}}
+        <div id="orcamento-{{orcamento.id}}" class="card mt-4">
+            <div class="card-body">
+                <div class="d-flex">
+                    <h6 id="{{orcamento.id}}">Cliente: <span class="fw-normal" name="orcamento">{{orcamento.cliente}}</span></h6>
+                    <div class="d-flex ms-auto">
+                        <button type="button" class="btn btn-sm editar" value="{{orcamento.id}}" aria-label="Edita o orçamento {{orcamento.nome}}" data-bs-placement="left" data-bs-title="Edita o orçamento {{orcamento.nome}}"><i class="bi bi-pencil-square"></i></button>
+                        <button type="button" class="btn btn-sm excluir" value="{{orcamento.id}}" aria-label="Exclui o orçamento {{orcamento.nome}}" data-bs-placement="bottom" data-bs-title="Excluir o orçamento {{orcamento.nome}}"><i class="bi bi-trash3"></i></button>
+                    </div>
+                </div>
+                <p>
+                    <small class="fw-bold">Descrição: <span class="fw-normal" name="endereco">{{orcamento.descricao}}</span></small>
+                </p>
+                <p>
+                    <small class="fw-bold">Valor: <span class="fw-normal" name="valor">{{orcamento.valor}}</span></small>
+                </p>
+            </div>
+            <div class="card-footer d-flex justify-content-around fts-italic">
+                <small>Criado em {{orcamento.created}}</small>
+                <small>Modificado em {{orcamento.modified}}</small>
+            </div>
+        </div>
+    {{else}}
+        <div class="card mt-4">
+            <div class="card-body">
+                <h6 class="opacity-75">Nenhum orçamento cadastrado</h6>
+            </div>
+        </div>
+    {{/each}}
+</div>
+
+<script type="text/javascript" src="/scripts/orcamento.js"></script>

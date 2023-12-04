@@ -1,0 +1,29 @@
+<div class="modal fade" id="modalForm" tabindex="-1" data-bs-backdrop="static" aria-labelledby="Formulário de edição do orçamento" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form id="frmEdicao" tag="Orcamento" action="/Orcamento/add" method="POST" class="needs-validation">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="tituloModalForm">Novo</h1>
+                    <button type="reset" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="idOrcamento" id="idOrcamento" />
+                    <label class="form-label" for="txtNomeCliente">Cliente</label>
+                    <select type="text" name="dropCliente" class="form-control" id="dropCliente"></select>
+                    <label class="form-label" for="txtDescrição">Descrição</label>
+                    <textarea name="txtDescricao" class="form-control" id="txtDescricao"></textarea>
+                    <div class="row">
+                        <div class="col-5">
+                            <label class="form-label" for="txtValor">Valor</label>
+                            <input type="number" name="txtValor" class="form-control" id="txtValor" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Fechar">Fechar</button>
+                    <button type="submit" class="btn btn-primary" aria-label="Salvar">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

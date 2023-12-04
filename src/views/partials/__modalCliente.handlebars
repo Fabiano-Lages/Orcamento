@@ -1,0 +1,45 @@
+<div class="modal fade" id="modalForm" tabindex="-1" data-bs-backdrop="static" aria-labelledby="Formulário de edição do cliente" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form id="frmEdicao" tag="Cliente" action="/Cliente/add" method="POST" class="needs-validation">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="tituloModalForm">Novo</h1>
+                    <button type="reset" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="idCliente" id="idCliente" />
+                    <label class="form-label" for="txtNomeCliente">Cliente</label>
+                    <input type="text" name="txtNomeCliente" class="form-control" id="txtNomeCliente" required />
+                    <div class="row">
+                        <div class="col-5">
+                            <label class="form-label" for="txtCEP">CEP</label>
+                            <input type="text" name="txtCEP" class="form-control" id="txtCEP" />
+                        </div>
+                    </div>
+                    <label class="form-label" for="txtEndereco">Endereço</label>
+                    <input type="text" name="txtEndereco" class="form-control" id="txtEndereco" />
+                    <div class="row">
+                        <div class="col-3">
+                            <label class="form-label" for="txtNumero">Número</label>
+                            <input type="number" name="txtNumero" class="form-control" id="txtNumero" />
+                        </div>
+                        <div class="col-9">
+                            <label class="form-label" for="txtComplemento">Complemento</label>
+                            <input type="text" name="txtComplemento" class="form-control" id="txtComplemento" />
+                        </div>
+                    </div>
+                    <label class="form-label" for="dropBairro">Bairro</label>
+                    <select type="text" name="dropBairro" class="form-control" id="dropBairro"></select>
+                    <label class="form-label" for="dropCidade">Cidade</label>
+                    <select type="text" name="dropCidade" class="form-control" id="dropCidade"></select>
+                    <label class="form-label" for="dropEstado">Estado</label>
+                    <select type="text" name="dropEstado" class="form-control" id="dropEstado"></select>
+                </div>
+                <div class="modal-footer">
+                    <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Fechar">Fechar</button>
+                    <button type="submit" class="btn btn-primary" aria-label="Salvar">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
