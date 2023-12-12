@@ -7,18 +7,28 @@ const Cliente = mongoose.model("clientes");
 
 routerCliente.get("/", async (req, res) => {
     const clientes = [];
-    const rst = await Cliente.find().populate("bairro", "cidade", "estado").sort({nome: "asc"});
+    const rst = await Cliente.find().populate("bairro").populate("cidade").populate("estado").sort({nome: "asc"});
     if(rst) {
         rst.forEach(cli => {
             clientes.push({
-                bairro: {
+                cliente: {
                     id: cli._id,
                     nome: cli.nome,
+                    endereco: cli.endereco,
                     numero: cli.numero,
                     complemento: cli.complemento,
-                    bairro: cli.bairro,
-                    cidade: cli.cidade,
-                    estado: cli.estado,
+                    bairro: {
+                        id: cli.bairro._id,
+                        nome: cli.bairro.nome
+                    },
+                    cidade: {
+                        id: cli.cidade._id,
+                        nome: cli.cidade.nome
+                    },
+                    estado: {
+                        id: cli.estado._id,
+                        nome: cli.estado.nome
+                    },
                     cep: cli.cep,
                     created: `${cli.created.toLocaleDateString("pt-BR")} ${cli.created.toLocaleTimeString("pt-BR")}`,
                     modified: `${cli.modified.toLocaleDateString("pt-BR")} ${cli.modified.toLocaleTimeString("pt-BR")}`
@@ -36,9 +46,16 @@ routerCliente.post("/add", (req, res) => {
     const nomeObjeto = "Cliente";
 
     if(req.body.idCliente) {
-        Cliente.findOne({_id: req.body.idBairro})
+        Cliente.findOne({_id: req.body.idCliente})
             .then((cliente) => {
                 cliente.nome = req.body.txtNomeCliente;
+                cliente.endereco = req.body.txtEndereco;
+                cliente.numero = req.body.txtNumero;
+                cliente.complemento = req.body.txtComplemento;
+                cliente.bairro = req.body.dropBairro;
+                cliente.cidade = req.body.dropCidade;
+                cliente.estado = req.body.dropEstado;
+                cliente.cep = req.body.txtCEP;
                 cliente.modified = new Date();
 
                 cliente.save()
@@ -47,6 +64,7 @@ routerCliente.post("/add", (req, res) => {
                         res.redirect(destino);
                     })
                     .catch((err) => {
+                        
                         req.flash("Erro", `Erro ao editar o ${nomeObjeto.toLowerCase()} ${req.body.txtNomeCliente}. ${err}`);
                         res.redirect(destino);
                     });
@@ -58,8 +76,14 @@ routerCliente.post("/add", (req, res) => {
     } else {
         new Cliente(
             {
-                nome: req.body.txtNomeClioente,
-                cidade: new mongoose.Types.ObjectId(req.body.hdCidade)
+                nome: req.body.txtNomeCliente,
+                endereco: req.body.txtEndereco,
+                numero: req.body.txtNumero,
+                complemento: req.body.txtComplemento,
+                bairro: req.body.dropBairro,
+                cidade: req.body.dropCidade,
+                estado: req.body.dropEstado,
+                cep: req.body.txtCEP
             })
             .save()
             .then(() => {
@@ -69,6 +93,7 @@ routerCliente.post("/add", (req, res) => {
             .catch((err) => {
                 req.flash("Erro", `Erro ao incluir o ${nomeObjeto.toLowerCase()} ${req.body.txtNomeCliente}. ${err}`);
                 res.redirect(destino);
+                console.log(err);
             });
     }
 });

@@ -123,8 +123,40 @@ const ativaBotoes = (frm) =>{
                 let id = obj.value;
                 preencheFormulario(id);
 
-                frm.action = `/Lista/${frm.getAttribute("tag")}/del`;
+                frm.action = `${(frm.action.indexOf("Lista") > -1 ? "/Lista" : "")}/${frm.getAttribute("tag")}/del`;
                 frm.submit();
             });
         });
+};
+
+// eslint-disable-next-line no-unused-vars
+const buscaCep = (campo) => {
+    let retorno = null;
+    if (campo.value !== "" && campo.value !== campo.getAttribute("old")) {
+        retorno = new Promise((resolve, reject) => {
+            var cep = campo.value.replace("-", "").replace(".", "");
+        
+            const xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4) {
+                    if(this.status == 200) {
+                        let resp = xhttp.responseText;
+                        if(resp) {
+                            resolve(JSON.parse(resp));
+                        } else {
+                            reject("Erro ao buscar o endereço do CEP");
+                        }
+                    } else {
+                        reject("Erro ao buscar o endereço do CEP");
+                    }
+                }
+            };
+            xhttp.open("GET", `http://cep.republicavirtual.com.br/web_cep.php?formato=json&cep=${cep}`, true);
+            xhttp.send();
+        });
+    } else {
+        retorno = Promise.resolve(null);
+    }
+
+    return(retorno);
 };

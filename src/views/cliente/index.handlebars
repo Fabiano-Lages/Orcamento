@@ -18,18 +18,18 @@
                 </div>
                 <p>
                     <small class="fw-bold">Endereço: <span class="fw-normal" name="endereco">{{cliente.endereco}}</span></small>
+                    <small class="fw-bold">Número: <span class="fw-normal" name="numero">{{cliente.numero}}</span></small>
+                    <small class="fw-bold">Complemento: <span class="fw-normal" name="complemento">{{cliente.complemento}}</span></small>
                 </p>
                 <p>
-                    <small class="fw-bold">Bairro: <span class="fw-normal" name="bairro">{{cliente.bairro}}</span></small>
-                </p>
-                <p>
-                    <small class="fw-bold">Cidade: <span class="fw-normal" name="cidade">{{cliente.cidade}}</span></small>
-                </p>
-                <p>
-                    <small class="fw-bold">Estado: <span class="fw-normal" name="estado">{{cliente.estado}}</span></small>
+                    <small class="fw-bold">Bairro: <span class="fw-normal" name="bairro" id="{{cliente.bairro.id}}">{{cliente.bairro.nome}}</span></small>
                 </p>
                 <p>
                     <small class="fw-bold">CEP: <span class="fw-normal" name="cep">{{cliente.cep}}</span></small>
+                    <small class="fw-bold">Cidade: <span class="fw-normal" name="cidade" id=" {{cliente.cidade.id}}">{{cliente.cidade.nome}}</span></small>
+                    <small class="fw-bold">Estado: <span class="fw-normal" name="estado" id="{{cliente.estado.id}}">{{cliente.estado.nome}}</span></small>
+                </p>
+                <p>
                 </p>
             </div>
             <div class="card-footer d-flex justify-content-around fts-italic">

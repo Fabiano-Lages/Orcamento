@@ -189,7 +189,12 @@ routerLista.get("/Cidade/Busca/:estado", (req, res) => {
 const buscaEstados = async (req) => {
     const lista = [];
     try {
-        const rst = await Estado.find().sort({nome: "asc"});
+        const filtro = {};
+        if(req.params.sigla) {
+            filtro.sigla = req.params.sigla;
+        }
+
+        const rst = await Estado.find(filtro).sort({nome: "asc"});
 
         if(rst) {
             rst.forEach(est => lista.push(
@@ -306,6 +311,37 @@ routerLista.get("/Estado", (req, res) => {
         })
         .catch(() => {
             res.redirect("/");
+        });
+});
+
+routerLista.get("/Estado/sigla/:sigla", (req, res) => {
+    buscaEstados(req)
+        .then((lstEstado) => {
+            if(lstEstado.length) {
+                buscaCidade(req, lstEstado[0].estado.id)
+                    .then((lista) => {
+                        lstEstado[0].estado.cidades = [];
+                        lista.forEach(cid => lstEstado[0].estado.cidades.push(cid.cidade));
+                        res.end(JSON.stringify(lstEstado));
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                        res.end(JSON.stringify({Erro: err}));
+                    });
+            }
+        })
+        .catch((err) => {
+            res.end(JSON.stringify({erro: "Estado não encontrado. " + err}));
+        });
+});
+
+routerLista.get("/Estado/Lista", (req, res) => {
+    buscaEstados(req)
+        .then((estados) => {
+            res.end(JSON.stringify(estados));
+        })
+        .catch((err) => {
+            res.end(JSON.stringify({erro: "Estados não encontrados. " + err}));
         });
 });
 

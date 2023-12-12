@@ -1,6 +1,6 @@
 const express = require("express");
-const handlebars = require("express-handlebars");
 const bodyParser = require("body-parser");
+const handlebars = require("express-handlebars");
 const config = require("./config/config");
 const routes = require("./routes/main");
 const routesLista = require("./routes/lista");
