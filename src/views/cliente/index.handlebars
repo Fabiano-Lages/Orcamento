@@ -10,26 +10,24 @@
         <div id="cliente-{{cliente.id}}" class="card mt-4">
             <div class="card-body">
                 <div class="d-flex">
-                    <h6 id="{{cliente.id}}">Nome: <span class="fw-normal" name="cliente">{{cliente.nome}}</span></h6>
+                    <h6 id="{{cliente.id}}">Nome: <span class="fw-normal mx-1" name="cliente">{{cliente.nome}}</span></h6>
                     <div class="d-flex ms-auto">
                         <button type="button" class="btn btn-sm editar" value="{{cliente.id}}" aria-label="Edita o cliente {{cliente.nome}}" data-bs-placement="left" data-bs-title="Edita o cliente {{cliente.nome}}"><i class="bi bi-pencil-square"></i></button>
                         <button type="button" class="btn btn-sm excluir" value="{{cliente.id}}" aria-label="Exclui o cliente {{cliente.nome}}" data-bs-placement="bottom" data-bs-title="Excluir o cliente {{cliente.nome}}"><i class="bi bi-trash3"></i></button>
                     </div>
                 </div>
-                <p>
-                    <small class="fw-bold">Endereço: <span class="fw-normal" name="endereco">{{cliente.endereco}}</span></small>
-                    <small class="fw-bold">Número: <span class="fw-normal" name="numero">{{cliente.numero}}</span></small>
-                    <small class="fw-bold">Complemento: <span class="fw-normal" name="complemento">{{cliente.complemento}}</span></small>
+                <p class="d-flex gap-5">
+                    <small class="fw-bold">Endereço: <span class="fw-normal mx-1" name="endereco">{{cliente.endereco}}</span></small>
+                    <small class="fw-bold">Número: <span class="fw-normal mx-1" name="numero">{{cliente.numero}}</span></small>
+                    <small class="fw-bold">Complemento: <span class="fw-normal mx-1" name="complemento">{{cliente.complemento}}</span></small>
                 </p>
                 <p>
-                    <small class="fw-bold">Bairro: <span class="fw-normal" name="bairro" id="{{cliente.bairro.id}}">{{cliente.bairro.nome}}</span></small>
+                    <small class="fw-bold">Bairro: <span class="fw-normal mx-1" name="bairro" id="{{cliente.bairro.id}}">{{cliente.bairro.nome}}</span></small>
                 </p>
-                <p>
-                    <small class="fw-bold">CEP: <span class="fw-normal" name="cep">{{cliente.cep}}</span></small>
-                    <small class="fw-bold">Cidade: <span class="fw-normal" name="cidade" id=" {{cliente.cidade.id}}">{{cliente.cidade.nome}}</span></small>
-                    <small class="fw-bold">Estado: <span class="fw-normal" name="estado" id="{{cliente.estado.id}}">{{cliente.estado.nome}}</span></small>
-                </p>
-                <p>
+                <p class="d-flex gap-5">
+                    <small class="fw-bold">CEP: <span class="fw-normal mx-1" name="cep">{{cliente.cep}}</span></small>
+                    <small class="fw-bold">Cidade: <span class="fw-normal mx-1" name="cidade" id="{{cliente.cidade.id}}">{{cliente.cidade.nome}}</span></small>
+                    <small class="fw-bold">Estado: <span class="fw-normal mx-1" name="estado" id="{{cliente.estado.id}}">{{cliente.estado.nome}}</span></small>
                 </p>
             </div>
             <div class="card-footer d-flex justify-content-around fts-italic">

@@ -117,33 +117,19 @@ const preencheCidade = (cidades, msg, selecionada) => {
         drop.removeChild(drop.childNodes[o]);
     }
 
-    let opt;
     if(cidades.length) {
-        opt = document.createElement("option");
-        opt.value = "";
-        opt.text = "Selecione uma cidade";
-        drop.appendChild(opt);
+        incluiOpcao(drop, "", "Selecione uma cidade");
 
         cidades.forEach(it => {
-            opt = document.createElement("option");
-            opt.value = it.id ?? it.cidade.id;
-            opt.text = it.nome ?? it.cidade.nome;
-            if(selecionada && opt.text == selecionada) {
-                opt.selected = true;
-                retorno = true;
+            incluiOpcao(drop, it.id ?? it.cidade.id, it.nome ?? it.cidade.nome, selecionada);
+            if(!retorno) {
+                retorno == (it.id ?? it.cidade.id) == selecionada;
             }
-            drop.appendChild(opt);
         });
     } else if(msg) {
-        opt = document.createElement("option");
-        opt.value = "";
-        opt.text = msg;
-        drop.appendChild(opt);
+        incluiOpcao(drop, "", msg);
     } else {
-        opt = document.createElement("option");
-        opt.value = "";
-        opt.text = "Nenhuma cidade cadastrada para este estado";
-        drop.appendChild(opt);
+        incluiOpcao(drop, "", "Nenhuma cidade cadastrada para este estado");
     }
 
     return(retorno);
@@ -156,33 +142,19 @@ const preencheBairro = (bairros, msg, selecionado) => {
         drop.removeChild(drop.childNodes[o]);
     }
 
-    let opt;
-    if(bairros.length) {
-        opt = document.createElement("option");
-        opt.value = "";
-        opt.text = "Selecione um bairro";
-        drop.appendChild(opt);
-
+    if(bairros && bairros.length) {
+        incluiOpcao(drop, "", "Selecione um bairro");
+        let ret = false;
         bairros.forEach(it => {
-            opt = document.createElement("option");
-            opt.value = it.bairro.id;
-            opt.text = it.bairro.nome;
-            if(selecionado && opt.text == selecionado) {
-                opt.selected = true;
-                retorno = true;
+            ret = incluiOpcao(drop, it.bairro.id, it.bairro.nome, selecionado);
+            if(!retorno && ret) {
+                retorno == ret;
             }
-            drop.appendChild(opt);
         });
     } else if(msg) {
-        opt = document.createElement("option");
-        opt.value = "";
-        opt.text = msg;
-        drop.appendChild(opt);
+        incluiOpcao(drop, "", msg);
     } else {
-        opt = document.createElement("option");
-        opt.value = "";
-        opt.text = "Nenhum bairro cadastrado para esta cidade";
-        drop.appendChild(opt);
+        incluiOpcao(drop, "", "Nenhum bairro cadastrado para esta cidade");
     }
 
     return(retorno);
@@ -264,6 +236,15 @@ const carregaBairro = (cidade) => {
     );
 };
 
+const incluiOpcao = (drop, id, texto, selecionado) => {
+    const opt = document.createElement("option");
+    opt.value = id;
+    opt.text = texto;
+    opt.selected = id == selecionado;
+    drop.appendChild(opt);
+    return(opt.selected);
+};
+
 // eslint-disable-next-line no-unused-vars
 const _verificaDup = () => {
     let autoriza = true;
@@ -288,4 +269,57 @@ const _preencheForm = (id) => {
 
     document.getElementById("idCliente").value = id;
     document.getElementById("txtNomeCliente").value = nome;
+    document.getElementById("txtEndereco").value = document.querySelector(`#cliente-${id} span[name='endereco']`).innerHTML;
+    document.getElementById("txtNumero").value = document.querySelector(`#cliente-${id} span[name='numero']`).innerHTML;
+    document.getElementById("txtComplemento").value = document.querySelector(`#cliente-${id} span[name='complemento']`).innerHTML;
+    document.getElementById("txtCEP").value = document.querySelector(`#cliente-${id} span[name='cep']`).innerHTML;
+    
+    let drop;
+    let cidade = false;
+    let aux = document.querySelector(`#cliente-${id} span[name='estado']`);
+    if(aux.innerHTML) {
+        drop = document.getElementById("dropEstado");
+        drop.value = aux.getAttribute("id");
+    }
+
+    aux = document.querySelector(`#cliente-${id} span[name='cidade']`);
+    if(aux.innerHTML) {
+        cidade = aux.getAttribute("id");
+
+        carregaCidade(drop.value)
+            .then((cidades) => {
+                preencheCidade(cidades, null, cidade);
+            })
+            .catch((err) => {
+                preencheCidade(null, err);
+            });
+
+        drop = document.getElementById("dropCidade");
+    }
+
+    if(cidade) {
+        aux = document.querySelector(`#cliente-${id} span[name='bairro']`);
+        carregaBairro(cidade)
+            .then((bairros) => {
+                preencheBairro(bairros, null, aux.getAttribute("id"));
+            })
+            .catch((err) => {
+                preencheBairro(null, err);
+            });
+    }
+
+    document.getElementById("tituloModalForm").innerHTML = `Editando ${nome}`;
+};
+
+// eslint-disable-next-line no-unused-vars
+const _limpaCampos = () => {
+    let drop = document.getElementById("dropBairro");
+    for(let o = drop.childNodes.length - 1; o >= 0; o--) {
+        drop.removeChild(drop.childNodes[o]);
+    }
+
+    drop = document.getElementById("dropCidade");
+    for(let o = drop.childNodes.length - 1; o >= 0; o--) {
+        drop.removeChild(drop.childNodes[o]);
+    }
 };

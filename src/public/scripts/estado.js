@@ -17,6 +17,8 @@ const _preencheForm = (id) => {
     document.getElementById("idEstado").value = id;
     document.getElementById("txtNomeEstado").value = nome;
     document.getElementById("txtSiglaEstado").value = sigla;
+
+    document.getElementById("tituloModalForm").innerHTML = `Editando ${nome}`;
 };
 
 // eslint-disable-next-line no-unused-vars

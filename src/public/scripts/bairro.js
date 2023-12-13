@@ -101,6 +101,7 @@ const _preencheForm = (id) => {
 
     document.getElementById("idBairro").value = id;
     document.getElementById("txtNomeBairro").value = nome;
+    document.getElementById("tituloModalForm").innerHTML = `Editando ${nome}`;
 };
 
 // eslint-disable-next-line no-unused-vars

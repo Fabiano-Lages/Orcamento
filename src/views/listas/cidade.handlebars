@@ -18,14 +18,14 @@
         <div id="cidade-{{cidade.id}}" class="card mt-4">
             <div class="card-body">
                 <div class="d-flex">
-                    <h6 id="{{cidade.id}}">Nome: <span class="fw-normal" name="cidade">{{cidade.nome}}</span></h6>
+                    <h6 id="{{cidade.id}}">Nome: <span class="fw-normal mx-1" name="cidade">{{cidade.nome}}</span></h6>
                     <div class="d-flex ms-auto">
                         <button type="button" class="btn btn-sm editar" value="{{cidade.id}}" aria-label="Edita a cidade {{cidade.nome}}" data-bs-placement="left" data-bs-title="Edita a cidade {{cidade.nome}}"><i class="bi bi-pencil-square"></i></button>
                         <button type="button" class="btn btn-sm excluir" value="{{cidade.id}}" aria-label="Exclui a cidade {{cidade.nome}}" data-bs-placement="bottom" data-bs-title="Excluir a cidade {{cidade.nome}}"><i class="bi bi-trash3"></i></button>
                     </div>
                 </div>
                 <p>
-                    <small class="fw-bold">Código de área: <span class="fw-normal" name="codigo">{{cidade.codigoArea}}</span></small>
+                    <small class="fw-bold">Código de área: <span class="fw-normal mx-1" name="codigo">{{cidade.codigoArea}}</span></small>
                 </p>
             </div>
             <div class="card-footer d-flex justify-content-around fts-italic">

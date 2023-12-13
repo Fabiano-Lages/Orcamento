@@ -15,6 +15,10 @@ window.addEventListener("load", () => {
         modalForm = document.getElementById("modalForm");
         modalForm.addEventListener("hidden.bs.modal", () => {
             document.getElementById("tituloModalForm").innerHTML = "Novo";
+            if(typeof(_limpaCampos) != "undefined") {
+                // eslint-disable-next-line no-undef
+                _limpaCampos();
+            }
             frm.reset();
         });
         modalForm.addEventListener("shown.bs.modal", () => {

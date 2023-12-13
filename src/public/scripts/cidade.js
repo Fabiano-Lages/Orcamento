@@ -49,6 +49,7 @@ const _preencheForm = (id) => {
     document.getElementById("txtNomeCidade").value = nome;
     document.getElementById("hdEstado").value = document.getElementById("dropEstado").value;
     document.getElementById("txtCodigoArea").value = codigo;
+    document.getElementById("tituloModalForm").innerHTML = `Editando ${nome}`;
 };
 
 // eslint-disable-next-line no-unused-vars
