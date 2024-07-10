@@ -4,7 +4,7 @@
   "description": "Programa para organizar orçamentos",
   "main": "src/index.js",
   "scripts": {
-    "start": "nodemon src/index.js"
+    "start": "nodemon --env-file src/config/.env src/index.js"
   },
   "repository": {
     "type": "git",
