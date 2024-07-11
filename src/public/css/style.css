@@ -1,3 +1,116 @@
+/* Reset de Estilos */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilos Gerais */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f0f0f0;
+    padding: 20px;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#logo {
+    height: 150px;
+    margin: -20px 0;
+}
+
+header h1 {
+    font-size: 1.8rem;
+}
+
+nav.bg-body-tertiary {
+    background-color: #333 !important;
+}
+
+a.nav-link,
+a.navbar-brand {
+    color:white!important;
+}
+
+a.navbar-brand,
+a.nav-link {
+    font-size: 20px;
+}
+
+section#dashboard {
+    grid-area: bloco1;
+}
+section#services {
+    grid-area: bloco2;
+}
+section#clients {
+    grid-area: bloco3;
+}
+section#reports {
+    grid-area: bloco4;
+}
+
+main {
+    display: grid;
+    grid-template-areas: 
+        'espaco1 bloco1 bloco2 espaco2'
+        'espaco1 bloco3 bloco4 espaco2';
+    gap: 20px;
+    margin-top: 20px;
+}
+
+section {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+footer ul {
+    list-style-type: none;
+    margin-top: 10px;
+}
+
+footer ul li {
+    display: inline;
+    margin-right: 10px;
+}
+
+footer ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+footer ul li a:hover {
+    text-decoration: underline;
+}
+
 .escondido {
     display: none;
 }
@@ -24,4 +137,9 @@
 
 #pnListagem button.excluir {
     color: red;
+}
+
+div#pnAlert {
+    width: 90%;
+    margin: auto;
 }

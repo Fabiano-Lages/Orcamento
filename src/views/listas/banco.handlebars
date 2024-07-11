@@ -1,35 +1,36 @@
 {{>__modalBanco}}
-<div class="d-flex align-items-center ps-3 pe-2 py-1 border-bottom">
-    <h4 class="">Bancos</h4>
-    <div class="d-flex ms-auto">
-        <button id="btnAdicionar" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalForm" data-bs-title="Adiciona um novo banco"><i class="bi bi-plus"></i></button>
+<div class="container">
+    <div class="d-flex align-items-center ps-3 pe-2 py-1 border-bottom">
+        <h4 class="">Bancos</h4>
+        <div class="d-flex ms-auto">
+            <button id="btnAdicionar" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalForm" data-bs-title="Adiciona um novo banco"><i class="bi bi-plus"></i></button>
+        </div>
     </div>
-</div>
 
-<div id="pnListagem" class="container overflow-y-scroll">
-    {{#each bancos}}
-        <div id="" class="card mt-4">
-            <div class="card-body">
-                <div class="d-flex">
-                    <h6 id="{{banco.id}}">Banco: <span class="fw-normal mx-1" name="banco">{{banco.nome}}</span></h6>
-                    <div class="d-flex ms-auto">
-                        <button type="button" class="btn btn-sm editar" value="{{banco.id}}" aria-label="Edita o banco {{banco.nome}}" data-bs-placement="left" data-bs-title="Edita o banco {{banco.nome}}"><i class="bi bi-pencil-square"></i></button>
-                        <button type="button" class="btn btn-sm excluir" value="{{banco.id}}" aria-label="Exclui o banco {{banco.nome}}" data-bs-placement="bottom" data-bs-title="Excluir o banco {{banco.nome}}"><i class="bi bi-trash3"></i></button>
+    <div id="pnListagem" class="container overflow-y-scroll">
+        {{#each bancos}}
+            <div id="" class="card mt-4">
+                <div class="card-body">
+                    <div class="d-flex">
+                        <h6 id="{{banco.id}}">Banco: <span class="fw-normal mx-1" name="banco">{{banco.nome}}</span></h6>
+                        <div class="d-flex ms-auto">
+                            <button type="button" class="btn btn-sm editar" value="{{banco.id}}" aria-label="Edita o banco {{banco.nome}}" data-bs-placement="left" data-bs-title="Edita o banco {{banco.nome}}"><i class="bi bi-pencil-square"></i></button>
+                            <button type="button" class="btn btn-sm excluir" value="{{banco.id}}" aria-label="Exclui o banco {{banco.nome}}" data-bs-placement="bottom" data-bs-title="Excluir o banco {{banco.nome}}"><i class="bi bi-trash3"></i></button>
+                        </div>
                     </div>
                 </div>
+                <div class="card-footer d-flex justify-content-around fts-italic">
+                    <small>Criado em {{banco.created}}</small>
+                    <small>Modificado em {{banco.modified}}</small>
+                </div>
             </div>
-            <div class="card-footer d-flex justify-content-around fts-italic">
-                <small>Criado em {{banco.created}}</small>
-                <small>Modificado em {{banco.modified}}</small>
+        {{else}}
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h6 class="opacity-75">Nenhum banco cadastrado</h6>
+                </div>
             </div>
-        </div>
-    {{else}}
-        <div class="card mt-4">
-            <div class="card-body">
-                <h6 class="opacity-75">Nenhum banco cadastrado</h6>
-            </div>
-        </div>
-    {{/each}}
+        {{/each}}
+    </div>
 </div>
-
 <script type="text/javascript" src="/scripts/banco.js"></script>
